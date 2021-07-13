@@ -8,6 +8,7 @@ export const generateBoard = () => {
           x: x,
           y: y,
           id: x.toString() + "," + y.toString(),
+          locked: false
         });
       }
       arr.push(runArr);
