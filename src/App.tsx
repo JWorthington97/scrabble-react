@@ -1,36 +1,33 @@
-import { useState } from 'react';
-import './App.css';
+import "./App.css";
+import { useState, createContext } from "react";
+import { generateBoard } from './utils/generateBoard'
+import {TileProps, HandleTileChangeProps} from "./Types"
+
+export const BoardContext = createContext<TileProps[][]>([])
 
 function App() {
-  
+  const [board, setBoard] = useState(generateBoard);
 
-  const generateBoard = () => {
-    let arr = []
-    for (let y = 0; y < 15; y++) {
-      let runArr = []
-      for (let i = 0; i < 15; i++) {
-        runArr.push({
-        letter: "",
-        y: y,
-        x:i,
-        id: i.toString() + "," + y.toString()
-      })
-      }
-      arr.push(runArr)
-    }
-    return arr
-  }
+  const handleTileChange = ({tile, setBoard}: HandleTileChangeProps) => {
+    let tiles = [...board];
+    let chosenTile = { ...tiles[tile.y][tile.x] };
+    chosenTile.letter = "test"; //change to letter
+    tiles[tile.y][tile.x] = chosenTile;
+    setBoard(tiles);
+  };
 
-  const [board, setBoard] = useState(generateBoard)
-  
   return (
+    <BoardContext.Provider value={board}>
     <div className="board">
-      {board.map((ar) => ( 
-        ar.map((el) => (
-          <div key={el.id} className="tile" onClick={() => console.log(el.id)}>{el.id}</div>
+      {board.map((tileRow) =>
+        tileRow.map((tile) => (
+          <div key={tile.id} className="tile" onClick={() => handleTileChange({tile, setBoard})}>
+            {tile.letter}
+          </div>
         ))
-      ))}
+      )}
     </div>
+    </BoardContext.Provider>
   );
 }
 

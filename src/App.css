@@ -26,8 +26,6 @@
   left: 30%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-
-
 }
 .tile {
   cursor: pointer;
@@ -38,5 +36,4 @@
   height: 38px;
   width: 38px;
   line-height: 38px;
-  
 }
