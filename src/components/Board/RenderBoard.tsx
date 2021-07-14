@@ -1,26 +1,31 @@
 import { useContext } from "react";
-import { HandleTileChangeProps } from "../../Types"
-import { BoardContext } from "../../App";
+import { HandleTileChangeProps, TileProps } from "../../Types"
+import { BoardContext, HandContext } from "../../App";
 import { RenderBoardProps } from "../../Types";
+var _ = require('lodash');
 
+export default function RenderBoard({ chosenTile, setBoard, setChosenTile, setHand }: RenderBoardProps):JSX.Element{
+  const board = useContext(BoardContext)
+  const hand = useContext(HandContext)
 
-
-
-export default function RenderBoard({ setBoard }: RenderBoardProps):JSX.Element{
-    const board = useContext(BoardContext)
-
-  const handleTileChange = ({tile, setBoard}: HandleTileChangeProps) => {
+  const handleTileChange = (tile: TileProps) => {
     let tiles = [...board];
-    let chosenTile = { ...tiles[tile.y][tile.x], letter: "test" }; // change to letter instead of test
-    tiles[tile.y][tile.x] = chosenTile;
-    setBoard(tiles);
+    if (chosenTile !== "") { // making sure a tile has been clicked from the hand
+      if (tiles[tile.y][tile.x].letter === "") {// preventing a tile overwrite
+        let boardTile = { ...tiles[tile.y][tile.x], letter: chosenTile }; 
+        tiles[tile.y][tile.x] = boardTile;
+        setBoard(tiles);
+        setChosenTile("")
+        setHand([...hand.filter((letter, index) => index != hand.indexOf(chosenTile))])
+      }
+    }
   };
 
   return (
     <div className="board">
       {board.map((tileRow) =>
         tileRow.map((tile) => (
-          <div key={tile.id} className="tile" onClick={() => handleTileChange({tile, setBoard})}>
+          <div key={tile.id} className="tile" onClick={() => handleTileChange(tile)}>
             {tile.letter}
           </div>
         ))

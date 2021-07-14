@@ -4,7 +4,7 @@ export const generateBoard = () => {
       let runArr = [];
       for (let x = 0; x < 15; x++) {
         runArr.push({
-          letter: "A",
+          letter: "",
           x: x,
           y: y,
           id: x.toString() + "," + y.toString(),
