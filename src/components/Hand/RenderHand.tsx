@@ -1,14 +1,20 @@
-import { useContext } from "react"
-import { BoardContext, HandContext } from "../../App"
-import { RenderHandProps } from "../../Types"
+import { useContext } from "react";
+import { BoardContext, HandContext } from "../../App";
+import { RenderHandProps } from "../../Types";
 
-export default function RenderHand({ setChosenTile }: RenderHandProps): JSX.Element {
-    let hand = useContext(HandContext)
-    return <>
-        {hand.map((char) => (
-            <div className="handTile" onClick={() => setChosenTile(char)}>{char}</div>
-        ))}
+export default function RenderHand({
+  setChosenTile,
+}: RenderHandProps): JSX.Element {
+  let hand = useContext(HandContext);
+  return (
+    <>
+      {hand.map((char) => (
+        <div className="handTile" onClick={() => setChosenTile(char)}>
+          {char}
+        </div>
+      ))}
     </>
+  );
 }
 
 // chosenTile, setChosenTile
