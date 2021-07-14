@@ -2,9 +2,8 @@ import { useContext } from "react";
 import { HandleTileChangeProps, TileProps } from "../../Types"
 import { BoardContext, HandContext } from "../../App";
 import { RenderBoardProps } from "../../Types";
-var _ = require('lodash');
 
-export default function RenderBoard({ chosenTile, setBoard, setChosenTile, setHand }: RenderBoardProps):JSX.Element{
+export default function RenderBoard({ chosenTile, setBoard, setChosenTile, setHand, tilesPlaced, setTilesPlaced }: RenderBoardProps):JSX.Element{
   const board = useContext(BoardContext)
   const hand = useContext(HandContext)
 
@@ -17,6 +16,7 @@ export default function RenderBoard({ chosenTile, setBoard, setChosenTile, setHa
         setBoard(tiles);
         setChosenTile("")
         setHand([...hand.filter((letter, index) => index != hand.indexOf(chosenTile))])
+        setTilesPlaced([...tilesPlaced, tile])
       }
     }
   };
