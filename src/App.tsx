@@ -1,40 +1,30 @@
-import { useState } from 'react';
-import './App.css';
+import "./App.css";
+import { useState, createContext } from "react";
+import { generateBoard } from './utils/generateBoard'
+import {TileProps} from "./Types"
+import RenderBoard from "./components/Board/RenderBoard";
+import RenderHand from "./components/Hand/RenderHand";
+
+export const BoardContext = createContext<TileProps[][]>([])
 
 function App() {
-  
+  const [board, setBoard] = useState(generateBoard);
 
-  const generateBoard = () => {
-    let arr = []
-    for (let y = 0; y < 15; y++) {
-      let runArr = []
-      for (let i = 0; i < 15; i++) {
-        runArr.push({
-        letter: "",
-        y: y,
-        x:i,
-        id: i.toString() + "," + y.toString()
-      })
-      }
-      arr.push(runArr)
-    }
-    return arr
-  }
-
-  const [board, setBoard] = useState(generateBoard)
-  
-  return (
-    <div className="board">
-      {board.map((ar) => ( 
-        ar.map((el) => (
-          <div key={el.id} className="tile" onClick={() => console.log(el.id)}>{el.id}</div>
-        ))
-      ))}
+  return <>
+  <BoardContext.Provider value={board}>
+    <div className="container">
+      <RenderBoard setBoard={setBoard}/>
+      <div className="RHS">
+        <div className="score">
+          Scores
+        </div>
+        <div className="hand">
+        <RenderHand />
+        </div>
+      </div>
     </div>
-  );
+  </BoardContext.Provider>
+  </>
 }
 
 export default App;
-
-// click the tile in hand and that will set a state (chosen tile)
-// on click for a space on the board sets that space to the chosen tile
