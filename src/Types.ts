@@ -28,6 +28,8 @@ export interface RenderHandProps {
 export interface SubmitActionProps {
   setTilesPlaced(numTilesPlaced: TileProps[]): void;
   setRestrictedPosition(restrictedPosition: RestrictedPositionProps): void;
+  tilesPlaced: TileProps[],
+  board: TileProps[][]
 }
 
 export interface RestrictedPositionProps {
@@ -38,4 +40,15 @@ export interface RestrictedPositionProps {
 export interface DetermineRestrictedPositionProps {
   tilesPlaced: TileProps[];
   setRestrictedPosition(restrictedPosition: RestrictedPositionProps): void;
+}
+
+export interface IWordPos {
+  start: {
+    x: number,
+    y: number
+  },
+  end: {
+    x: number,
+    y: number
+  }
 }
